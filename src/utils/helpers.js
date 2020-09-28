@@ -1,4 +1,4 @@
-import { COMPUTER, PLAYER, DRAW } from './constantse';
+import { COMPUTER, PLAYER, DRAW } from './constants';
 
 export const findEmptySquareIndices = (board) => {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(id => !board[id]);

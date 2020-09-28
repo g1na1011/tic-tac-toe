@@ -115,6 +115,14 @@ const ResetButton = styled.button`
   border-radius: 4px;
   padding: 10px 20px;
   background-color: white;
+  cursor: pointer;
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+  &:active {
+    background-color: #FA5;
+  }
 `;
 const WinnerText = styled.h2`
   margin-top: 20px;
