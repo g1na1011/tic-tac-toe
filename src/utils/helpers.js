@@ -32,7 +32,7 @@ export const getScoreForMove = (board) => {
   indices.forEach((idx) => {
     // if next move === -10 winning move or if there is no winning move, pick a move where minimax(Nextmove) is
     // undefined because that's where opponent have no winning move
-    if ((scoreBoard[idx] === -10) || (!scoreBoard[idx] && move.score !== -10)) {
+    if (scoreBoard[idx] === -10 || !scoreBoard[idx]) {
       move.index = idx;
       move.score = scoreBoard[idx];
     }
