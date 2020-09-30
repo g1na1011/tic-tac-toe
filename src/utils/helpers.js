@@ -1,4 +1,4 @@
-import { COMPUTER, PLAYER, DRAW } from './constants';
+import { COMPUTER, PLAYER } from './constants';
 
 export const findEmptySquareIndices = (board) => {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(id => !board[id]);
@@ -30,7 +30,7 @@ export const getScoreForMove = (board) => {
   const indices = Object.keys(scoreBoard);
   indices.forEach((idx) => {
     // if next move === -10 winning move, if no winning move, pick a move where minimaxNextmove is undefined because that's where oponent have no winning move
-    if (scoreBoard[idx] === -10 || !scoreBoard[idx] && move.score !== -10) {
+    if ((scoreBoard[idx] === -10) || (!scoreBoard[idx] && move.score !== -10)) {
       move.index = idx;
       move.score = scoreBoard[idx];
     }
@@ -68,14 +68,14 @@ export const minimax = (board, isUser) => {
 
   let bestMove;
   if (!isUser) {
-    for(var i = 0; i < moves.length; i++){
+    for(let i = 0; i < moves.length; i++){
       const finalScore = getScore(moves[i]);
       if (finalScore === -10) {
         bestMove = i;
       }
     }
   } else {
-    for (var i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
       const finalScore = getScore(moves[i]);
       if (finalScore === 10) {
         bestMove = i;
