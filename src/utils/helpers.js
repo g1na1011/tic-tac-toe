@@ -15,6 +15,7 @@ export const getScoreForMove = (board) => {
   const availableSquares = findEmptySquareIndices(board);
   let move = {};
 
+  // if you are on the second move (empty squares are 8 left and center square is empty)
   if (availableSquares.length === 8 && !board[5]) {
     move = {
       index: 5,
@@ -29,7 +30,8 @@ export const getScoreForMove = (board) => {
 
   const indices = Object.keys(scoreBoard);
   indices.forEach((idx) => {
-    // if next move === -10 winning move, if no winning move, pick a move where minimaxNextmove is undefined because that's where oponent have no winning move
+    // if next move === -10 winning move or if there is no winning move, pick a move where minimax(Nextmove) is
+    // undefined because that's where opponent have no winning move
     if ((scoreBoard[idx] === -10) || (!scoreBoard[idx] && move.score !== -10)) {
       move.index = idx;
       move.score = scoreBoard[idx];
@@ -39,16 +41,19 @@ export const getScoreForMove = (board) => {
   return move;
 };
 
-export const minimax = (board, isUser) => {
-  const play = isUser ? PLAYER : COMPUTER;
+export const minimax = (board, isPlayer) => {
+  const play = isPlayer ? PLAYER : COMPUTER;
   const availableSquares = findEmptySquareIndices(board);
 
-  if (checkForWinner(board) && isUser) {
+  // computer wins
+  if (checkForWinner(board) && isPlayer) {
     return -10;
   }
-  if (checkForWinner(board) && !isUser) {
+  // player wins
+  if (checkForWinner(board) && !isPlayer) {
     return 10;
   }
+  // there is a draw
   if (availableSquares.length === 0) {
     return 0;
   }
@@ -56,7 +61,7 @@ export const minimax = (board, isUser) => {
   const moves = [];
   availableSquares.forEach((idx) => {
     let move = { index: idx };
-    if (isUser) {
+    if (isPlayer) {
       const result = minimax({ ...board, [idx]: play }, false);
       move.score = result;
     } else {
@@ -67,7 +72,7 @@ export const minimax = (board, isUser) => {
   });
 
   let bestMove;
-  if (!isUser) {
+  if (!isPlayer) {
     for(let i = 0; i < moves.length; i++){
       const finalScore = getScore(moves[i]);
       if (finalScore === -10) {
